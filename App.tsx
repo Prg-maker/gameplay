@@ -18,7 +18,7 @@ import { Routes } from './src/routes'
 import { Background } from "./src/components/Background";
 import {AuthProvider} from './src/hooks/auth'
 
-
+LogBox.ignoreAllLogs()
 
 export default function App(){
   const [fontsLoaded] = useFonts({

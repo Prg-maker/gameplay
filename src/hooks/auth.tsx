@@ -20,7 +20,8 @@ import axios from "axios";
 
 type AuthorizationResponse= AuthSession.AuthSessionResult &  {
   params: {
-    access_token: string
+    access_token?: string,
+    error?: string
   }
 } 
 
@@ -59,7 +60,7 @@ function AuthProvider({children }:AuthProviderProps){
       const authUrl= `${api.defaults.baseURL}/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
       const {type , params} = await AuthSession.startAsync({authUrl}) as AuthorizationResponse
 
-      if(type === "success"){
+      if(type === "success"&& !params.error ){
         api.defaults.headers.authorization = `Bearer ${params.access_token}`;
 
         const userInfo = await api.get('/users/@me')
@@ -75,13 +76,13 @@ function AuthProvider({children }:AuthProviderProps){
 
 
         setLoading(false)
-      }else{
-        setLoading(false)
       }
       
 
     }catch{
       throw new Error('Não foi possivel autenticar')
+    }finally{
+      setLoading(false)
     }
   }
 
