@@ -17,6 +17,8 @@ export const theme ={
     overlay: 'rgba(0,0,0,0.7)',
     highlight: '#ABB1CC',
     on: '#32BD50',
+    logout:'#0E1647',
+    discord: '#7289da'
   },
 
   fonts: {

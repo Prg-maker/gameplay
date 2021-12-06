@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { GuildIcon } from '../GuildIcon';
 import { categories } from '../../ultils/categories';
 import { theme } from '../../global/styles/theme';
-import { GuildProps } from '../Guild';
+import { Guild, GuildProps } from '../Guild';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -17,7 +17,7 @@ export type AppointmentProps={
   id: string,
   guild:  GuildProps,
   category: string,
-  date: string,
+  data: string,
   description: string
 }
 
@@ -30,6 +30,7 @@ export function Appointment({data, ...rest} : Props){
   const {owner} = data.guild
   const {primaryColor , on , secondary70, secondary50} = theme.colors
 
+  
   return (
     <RectButton {...rest} >
       <View style={styles.container} >
@@ -37,7 +38,10 @@ export function Appointment({data, ...rest} : Props){
           style={styles.guildIconContainer}
           colors={[ secondary70, secondary50]}
         >
-          <GuildIcon/>
+          <GuildIcon
+            guildId={data.guild.id}
+            iconId={data.guild.icon}
+          />
 
         </LinearGradient>
         
@@ -48,7 +52,6 @@ export function Appointment({data, ...rest} : Props){
               </Text>
 
               <Text style={styles.category}>
-                {category.title}
               </Text>
             </View>
 
@@ -58,7 +61,7 @@ export function Appointment({data, ...rest} : Props){
                 <CalenderSvg/>
 
                 <Text style={styles.date}>
-                    {data.date}
+                  {data.data}
                 </Text>
               </View>  
 

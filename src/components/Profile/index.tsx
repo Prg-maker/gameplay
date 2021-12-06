@@ -1,20 +1,66 @@
-import React, { useReducer } from 'react';
-
-import {View , Text} from 'react-native';
+import React, { useReducer, useState } from 'react';
+import {RectButton}  from 'react-native-gesture-handler'
+import {View , Text , Alert} from 'react-native';
 import { useAuth } from '../../hooks/auth';
 import { Avatar } from '../Avatar';
 
 import { styles } from './styles';
+import { Logout } from '../Logout';
+import { ModalView } from '../ModalView';
+import { ButtonLogout } from '../ButtonLogout';
 
 export function Profile(){
-  const {user} = useAuth()
-  console.log(user)
+
+  const [openLogout , setOpenLogout] = useState(false)
+
+  const {user , singOut} = useAuth()
+
+  function handleSingOut(){
+    Alert.alert('Logout' , 'Deseja sair do gameplay' , 
+    [
+      {
+        text: 'Não',
+        style: "cancel"
+      },
+      {
+        text: 'Sim',
+        onPress: ()=> singOut()
+      }
+
+    ])
+  }
+
+  function OpenLogout(){
+    setOpenLogout(true)
+  }
+
+  function CloseLogout(){
+    setOpenLogout(false)
+    
+  }
+  function Console(){
+    console.log('chegou aqui')
+  }
+
+
+
   return (
     <View style={styles.container}>
 
-      <Avatar
-        urlImage={user.avatar}
-      />
+
+        <RectButton
+          onPress={handleSingOut}
+        >
+          <Avatar
+          urlImage={user.avatar}
+          />
+       
+        
+           
+
+              
+        </RectButton>
+      
 
       <View>
         <View style={styles.user}>
@@ -30,6 +76,10 @@ export function Profile(){
         </Text>
 
       </View>
+
+      
+
+
     </View>
   );
 }
